@@ -84,10 +84,12 @@ For Hardware:
 *Explain the final build*
 
 ### Project Demo
+
 # Video
 
-<video src="VIDEO1.webm" controls width="800">
-</video>
+[![Watch the Demo](https://img.shields.io/badge/▶%20Watch%20Demo-VIDEO1.webm-blue)](VIDEO1.webm)
+
+*Demo video showing the Chaos Calculator and its different calculations.*
 
 *Demo video showing the Chaos Calculator and its different calculations.*
 
