@@ -85,8 +85,11 @@ For Hardware:
 
 ### Project Demo
 # Video
-[Add your demo video link here]
-*Explain what the video demonstrates*
+
+<video src="VIDEO1.webm" controls width="800">
+</video>
+
+*Demo video showing the Chaos Calculator and its different calculations.*
 
 # Additional Demos
 [Add any extra demo materials/links]
