@@ -3,33 +3,33 @@
 
 
 # [Project Name] 🎯
-
+Chaos calculator
 
 ## Basic Details
 ### Team Name: [Name]
-
+Devika Rojan
 
 ### Team Members
 - Team Lead: [Name] - [College]
 - Member 2: [Name] - [College]
 - Member 3: [Name] - [College]
-
+Devika Rojan
 ### Project Description
 [2-3 lines about what your project does]
-
+A funny calculator that calculates unnecessary things like phone screen time, episode watching time,prorastination time.
 ### The Problem (that doesn't exist)
 [What ridiculous problem are you solving?]
-
+We can understand how many of ypur life you have wasted doing thing.
 ### The Solution (that nobody asked for)
 [How are you solving it? Keep it fun!]
-
+I created a software to calculate time taken for episodes watching, phone screen time and feel regret of this
 ## Technical Details
 ### Technologies/Components Used
 For Software:
-- [Languages used]
+- [Languages used] HTML , Javascript, CSS
 - [Frameworks used]
 - [Libraries used]
-- [Tools used]
+- [Tools used] Antigravity 
 
 For Hardware:
 - [List main components]
