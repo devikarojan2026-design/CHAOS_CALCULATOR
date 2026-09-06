@@ -48,14 +48,17 @@ For Software:
 For Software:
 
 # Screenshots (Add at least 3)
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
+![Screenshot 1](1.png)
+*Screenshot 1 – Chaos Calculator interface*
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
+![Screenshot 2](2.png)
+*Screenshot 2 – Phone screen time calculation*
 
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
+![Screenshot 3](3.png)
+*Screenshot 3 – Episode watching time calculation*
+
+![Screenshot 4](4.png)
+*Screenshot 4 – Procrastination time calculation*
 
 # Diagrams
 ![Workflow](Add your workflow/architecture diagram here)
