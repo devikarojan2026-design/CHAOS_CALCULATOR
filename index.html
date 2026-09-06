@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chaos Calculator — Science That Doesn't Help</title>
+  <meta name="description" content="Chaos Calculator: Binge-watch sinkhole, phone screen time soul crusher, and procrastination doom loop. Quantifying your wasted hours with hilarious scientific inaccuracy." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ═══════════════════════════════════
+       HERO SECTION
+  ════════════════════════════════════ -->
+  <header class="pt-10 pb-8 text-center">
+    <p class="hero-subtitle mb-3">v4.20 — Peer Reviewed by Nobody</p>
+    <h1 class="hero-title glitch" data-text="Chaos Calculator">Chaos Calculator</h1>
+    <p class="mt-4 text-sm" style="color: var(--muted); font-family: 'Space Mono', monospace; letter-spacing: 0.05em;">
+      Solving problems that don't exist since 2026 &nbsp;|&nbsp; 100% scientifically inaccurate
+    </p>
+
+    <!-- Stats bar -->
+    <div class="flex justify-center gap-8 mt-7 flex-wrap">
+      <div class="text-center">
+        <div class="text-2xl font-black" style="color: var(--gold); font-family: 'Space Mono', monospace;" id="stat-calcs">0</div>
+        <div class="text-xs uppercase tracking-widest mt-1" style="color: var(--muted);">Calculations Made</div>
+      </div>
+      <div class="text-center">
+        <div class="text-2xl font-black" style="color: var(--red); font-family: 'Space Mono', monospace;">3</div>
+        <div class="text-xs uppercase tracking-widest mt-1" style="color: var(--muted);">Chaos Meters</div>
+      </div>
+      <div class="text-center">
+        <div class="text-2xl font-black" style="color: var(--cyan); font-family: 'Space Mono', monospace;">0</div>
+        <div class="text-xs uppercase tracking-widest mt-1" style="color: var(--muted);">Problems Solved</div>
+      </div>
+    </div>
+
+    <!-- Sound Control -->
+    <div class="flex justify-center mt-4">
+      <button id="sound-toggle" class="sound-toggle-btn" onclick="toggleAudio()" title="Toggle Web Audio SFX">
+        <span id="sound-icon">🔊</span> <span id="sound-text">SFX: ON</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══════════════════════════════════
+       TAB NAVIGATION
+  ════════════════════════════════════ -->
+  <nav class="tab-nav" role="tablist" aria-label="Calculator selector">
+    <div class="tab-pill" id="tab-pill"></div>
+    <button class="tab-btn active" id="tab-0" onclick="switchTab(0)" role="tab" aria-selected="true" aria-controls="panel-0">
+      📺 Binge Sink
+    </button>
+    <button class="tab-btn" id="tab-1" onclick="switchTab(1)" role="tab" aria-selected="false" aria-controls="panel-1">
+      📱 Phone Screen Time
+    </button>
+    <button class="tab-btn" id="tab-2" onclick="switchTab(2)" role="tab" aria-selected="false" aria-controls="panel-2">
+      ⏰ Procrastination Loop
+    </button>
+  </nav>
+
+  <!-- ═══════════════════════════════════
+       PANEL 0 — THE BINGE-WATCH TIME SINK
+  ════════════════════════════════════ -->
+  <section class="calc-panel active" id="panel-0" role="tabpanel" aria-labelledby="tab-0">
+
+    <!-- Inputs Card -->
+    <div class="card">
+      <span class="card-tag">MODULE_01</span>
+      <div class="calc-name">📺 The Binge-Watch Time Sink</div>
+      <div class="calc-desc">Quantifying the exact epoch you sacrificed to streaming algorithms. Scientifically audited with devastating accuracy.</div>
+
+      <!-- TV Show Presets Dropdown & Quick Chips -->
+      <div class="preset-group">
+        <label class="input-label" for="binge-preset">Popular TV Show Presets</label>
+        <select id="binge-preset" onchange="onPresetChange(this.value)">
+          <option value="custom">-- Custom / Manual Entry --</option>
+          <option value="office" selected>The Office (US) — 201 eps @ 22 min</option>
+          <option value="breaking_bad">Breaking Bad — 62 eps @ 47 min</option>
+          <option value="got">Game of Thrones — 73 eps @ 57 min</option>
+          <option value="stranger_things">Stranger Things — 34 eps @ 55 min</option>
+          <option value="friends">Friends — 236 eps @ 22 min</option>
+          <option value="greys">Grey's Anatomy — 420 eps @ 43 min</option>
+          <option value="one_piece">One Piece (Anime) — 1,100 eps @ 24 min</option>
+          <option value="simpsons">The Simpsons — 760 eps @ 22 min</option>
+          <option value="sopranos">The Sopranos — 86 eps @ 55 min</option>
+          <option value="succession">Succession — 39 eps @ 60 min</option>
+        </select>
+
+        <div class="preset-chips-grid">
+          <button type="button" class="preset-chip active" onclick="selectShowPreset('office', this)">Office</button>
+          <button type="button" class="preset-chip" onclick="selectShowPreset('breaking_bad', this)">BrBa</button>
+          <button type="button" class="preset-chip" onclick="selectShowPreset('got', this)">GoT</button>
+          <button type="button" class="preset-chip" onclick="selectShowPreset('friends', this)">Friends</button>
+          <button type="button" class="preset-chip" onclick="selectShowPreset('greys', this)">Grey's</button>
+          <button type="button" class="preset-chip" onclick="selectShowPreset('one_piece', this)">One Piece</button>
+        </div>
+      </div>
+
+      <!-- Total Episodes -->
+      <label class="input-label" for="binge-eps">
+        Total Episodes Watched
+        <span class="input-value" id="val-binge-eps">201</span>
+      </label>
+      <input type="range" id="binge-eps-slider" min="1" max="1200" value="201"
+             oninput="syncBingeInput('eps', this.value, 'slider')">
+      <input type="number" id="binge-eps" min="1" max="5000" value="201" placeholder="e.g. 62"
+             oninput="syncBingeInput('eps', this.value, 'number')"
+             onblur="if(!this.value || parseInt(this.value,10) < 1) syncBingeInput('eps', 1, 'preset')">
+
+      <!-- Runtime per Episode -->
+      <label class="input-label" for="binge-runtime">
+        Runtime per Episode (Minutes)
+        <span class="input-value" id="val-binge-runtime">22m</span>
+      </label>
+      <input type="range" id="binge-runtime-slider" min="1" max="180" value="22"
+             oninput="syncBingeInput('runtime', this.value, 'slider')">
+      <input type="number" id="binge-runtime" min="1" max="500" value="22" placeholder="e.g. 30"
+             oninput="syncBingeInput('runtime', this.value, 'number')"
+             onblur="if(!this.value || parseInt(this.value,10) < 1) syncBingeInput('runtime', 22, 'preset')">
+
+      <!-- Times Re-watched -->
+      <label class="input-label" for="binge-rewatch">
+        Times Re-watched
+        <span class="input-value" id="val-binge-rewatch">1×</span>
+      </label>
+      <input type="range" id="binge-rewatch" min="1" max="10" value="1"
+             oninput="document.getElementById('val-binge-rewatch').textContent = this.value + '×'">
+
+      <!-- Calculate Button -->
+      <button class="calc-btn" onclick="calculate(0)" id="calc-btn-0">
+        📺 CALCULATE TV REGRET
+      </button>
+    </div>
+
+    <!-- Output Screen Card -->
+    <div class="card p-0" style="padding: 1.25rem;">
+      <div class="screen-frame">
+        <div class="screen" id="screen-0">
+          <div class="screen-header">BINGE_SINK // TEMPORAL_DEFICIT_ANALYZER v3.1</div>
+          <div class="screen-idle" id="idle-0">
+            &gt; sofa cushion density: 100% squished<br/>
+            &gt; signs of physical activity: 0 found<br/>
+            &gt; Netflix "Still Watching?" button: undefeated<br/>
+            &gt; ready to roast your life choices...<br/>
+            <span class="cursor"></span>
+          </div>
+          <div id="result-0" style="display:none;"></div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════════════
+       PANEL 1 — THE PHONE TIME BLACK HOLE
+  ════════════════════════════════════ -->
+  <section class="calc-panel" id="panel-1" role="tabpanel" aria-labelledby="tab-1">
+
+    <!-- Inputs Card -->
+    <div class="card">
+      <span class="card-tag">MODULE_02</span>
+      <div class="calc-name">📱 The Phone Time Black Hole</div>
+      <div class="calc-desc">Quantify how many years of your fleeting mortal existence you gave to a piece of glowing pocket glass.</div>
+
+      <!-- App Addiction Dropdown & Quick Chips -->
+      <div class="preset-group">
+        <label class="input-label" for="phone-app">Primary Digital Poison</label>
+        <select id="phone-app" onchange="onAppPresetChange(this.value)">
+          <option value="tiktok" selected>TikTok / Reels Doomscrolling</option>
+          <option value="twitter">Twitter / X Arguing with Strangers</option>
+          <option value="insta">Instagram Food &amp; Vacation Envy</option>
+          <option value="reddit">3 AM Reddit Rabbit Holes</option>
+          <option value="games">Mobile Games You Don't Even Enjoy</option>
+          <option value="ghost">Staring at Empty Notification Tray</option>
+        </select>
+
+        <div class="preset-chips-grid">
+          <button type="button" class="preset-chip active" onclick="selectAppPreset('tiktok', this)">TikTok</button>
+          <button type="button" class="preset-chip" onclick="selectAppPreset('twitter', this)">X/Twitter</button>
+          <button type="button" class="preset-chip" onclick="selectAppPreset('insta', this)">Insta</button>
+          <button type="button" class="preset-chip" onclick="selectAppPreset('reddit', this)">Reddit</button>
+          <button type="button" class="preset-chip" onclick="selectAppPreset('games', this)">Games</button>
+          <button type="button" class="preset-chip" onclick="selectAppPreset('ghost', this)">Ghost</button>
+        </div>
+      </div>
+
+      <!-- Daily Screen Time -->
+      <label class="input-label" for="phone-daily">
+        Daily Screen Time (Hours per Day)
+        <span class="input-value" id="val-phone-daily">5.5h</span>
+      </label>
+      <input type="range" id="phone-daily-slider" min="0.5" max="18" step="0.5" value="5.5"
+             oninput="syncPhoneInput('daily', this.value, 'slider')">
+      <input type="number" id="phone-daily" min="0.5" max="24" step="0.5" value="5.5" placeholder="e.g. 6.5"
+             oninput="syncPhoneInput('daily', this.value, 'number')"
+             onblur="if(!this.value || parseFloat(this.value) < 0.5) syncPhoneInput('daily', 5.5, 'preset')">
+
+      <!-- Years Owned Smartphone -->
+      <label class="input-label" for="phone-years">
+        Years You've Owned a Smartphone
+        <span class="input-value" id="val-phone-years">8 yrs</span>
+      </label>
+      <input type="range" id="phone-years-slider" min="1" max="20" step="1" value="8"
+             oninput="syncPhoneInput('years', this.value, 'slider')">
+      <input type="number" id="phone-years" min="1" max="30" step="1" value="8" placeholder="e.g. 10"
+             oninput="syncPhoneInput('years', this.value, 'number')"
+             onblur="if(!this.value || parseInt(this.value,10) < 1) syncPhoneInput('years', 8, 'preset')">
+
+      <!-- Calculate Button -->
+      <button class="calc-btn" onclick="calculate(1)" id="calc-btn-1">
+        📱 CALCULATE SCREEN TIME DAMAGE
+      </button>
+    </div>
+
+    <!-- Output Screen Card -->
+    <div class="card p-0" style="padding: 1.25rem;">
+      <div class="screen-frame">
+        <div class="screen" id="screen-1">
+          <div class="screen-header">PHONE_BLACK_HOLE // THUMB_METRICS v2.4</div>
+          <div class="screen-idle" id="idle-1">
+            &gt; battery status: 11% (and dropping)<br/>
+            &gt; thumb tendon strain: maximum<br/>
+            &gt; daily screen limit warning: dismissed without reading<br/>
+            &gt; ready to measure your dopamine debt...<br/>
+            <span class="cursor"></span>
+          </div>
+          <div id="result-1" style="display:none;"></div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════════════
+       PANEL 2 — THE PROCRASTINATION DOOM LOOP
+  ════════════════════════════════════ -->
+  <section class="calc-panel" id="panel-2" role="tabpanel" aria-labelledby="tab-2">
+
+    <!-- Inputs Card -->
+    <div class="card">
+      <span class="card-tag">MODULE_03</span>
+      <div class="calc-name">⏰ The Procrastination Doom Loop</div>
+      <div class="calc-desc">Calculate your exact procrastination breakdown: assignment time vs. YouTube, Instagram, and snack expeditions.</div>
+
+      <!-- Quick Scenario Chips -->
+      <div class="preset-group">
+        <label class="input-label">Quick Procrastination Scenarios</label>
+        <div class="preset-chips-grid">
+          <button type="button" class="preset-chip active" onclick="selectProcScenario('homework', this)">Homework Panic</button>
+          <button type="button" class="preset-chip" onclick="selectProcScenario('cram', this)">Midnight Cram</button>
+          <button type="button" class="preset-chip" onclick="selectProcScenario('quick', this)">10-Min Task</button>
+          <button type="button" class="preset-chip" onclick="selectProcScenario('project', this)">Weekend Project</button>
+        </div>
+      </div>
+
+      <!-- Live Total Procrastination Pill -->
+      <div class="p-3 mb-4 rounded-lg border border-dashed text-center" style="background: rgba(255, 65, 54, 0.08); border-color: var(--red);">
+        <div class="text-xs uppercase tracking-wider" style="color: var(--muted); font-family: 'Space Mono', monospace;">Live Overall Procrastination Time</div>
+        <div class="text-xl font-black mt-1" style="color: var(--red); font-family: 'Space Mono', monospace;" id="proc-live-total">195 mins (3h 15m)</div>
+        <div class="text-xs mt-1" style="color: var(--gold);" id="proc-live-compare">vs 45m actual assignment (4.3× delay)</div>
+      </div>
+
+      <!-- 1. Assignment Time Needed -->
+      <label class="input-label" for="proc-assign">
+        📝 Actual Assignment / Work Time Needed (Minutes)
+        <span class="input-value" id="val-proc-assign">45m</span>
+      </label>
+      <input type="range" id="proc-assign-slider" min="5" max="360" step="5" value="45"
+             oninput="syncProcTimeInput('assign', this.value, 'slider')">
+      <input type="number" id="proc-assign" min="5" max="600" step="5" value="45" placeholder="e.g. 45"
+             oninput="syncProcTimeInput('assign', this.value, 'number')"
+             onblur="if(!this.value || parseInt(this.value,10) < 5) syncProcTimeInput('assign', 45, 'preset')">
+
+      <!-- 2. YouTube Time -->
+      <label class="input-label" for="proc-yt">
+        ▶️ YouTube "Research" Time (Minutes)
+        <span class="input-value" id="val-proc-yt">90m</span>
+      </label>
+      <input type="range" id="proc-yt-slider" min="0" max="480" step="5" value="90"
+             oninput="syncProcTimeInput('yt', this.value, 'slider')">
+      <input type="number" id="proc-yt" min="0" max="720" step="5" value="90" placeholder="e.g. 90"
+             oninput="syncProcTimeInput('yt', this.value, 'number')"
+             onblur="if(!this.value || parseInt(this.value,10) < 0) syncProcTimeInput('yt', 90, 'preset')">
+
+      <!-- 3. Instagram Time -->
+      <label class="input-label" for="proc-insta">
+        📸 Instagram / Reels Doomscroll Time (Minutes)
+        <span class="input-value" id="val-proc-insta">60m</span>
+      </label>
+      <input type="range" id="proc-insta-slider" min="0" max="480" step="5" value="60"
+             oninput="syncProcTimeInput('insta', this.value, 'slider')">
+      <input type="number" id="proc-insta" min="0" max="720" step="5" value="60" placeholder="e.g. 60"
+             oninput="syncProcTimeInput('insta', this.value, 'number')"
+             onblur="if(!this.value || parseInt(this.value,10) < 0) syncProcTimeInput('insta', 60, 'preset')">
+
+      <!-- 4. Snacks Time -->
+      <label class="input-label" for="proc-snack">
+        🍕 Snacks Prep &amp; Fridge Staring Time (Minutes)
+        <span class="input-value" id="val-proc-snack">45m</span>
+      </label>
+      <input type="range" id="proc-snack-slider" min="0" max="240" step="5" value="45"
+             oninput="syncProcTimeInput('snack', this.value, 'slider')">
+      <input type="number" id="proc-snack" min="0" max="360" step="5" value="45" placeholder="e.g. 45"
+             oninput="syncProcTimeInput('snack', this.value, 'number')"
+             onblur="if(!this.value || parseInt(this.value,10) < 0) syncProcTimeInput('snack', 45, 'preset')">
+
+      <!-- Calculate Button -->
+      <button class="calc-btn" onclick="calculate(2)" id="calc-btn-2">
+        ⏰ CALCULATE PROCRASTINATION DAMAGE
+      </button>
+    </div>
+
+    <!-- Output Screen Card -->
+    <div class="card p-0" style="padding: 1.25rem;">
+      <div class="screen-frame">
+        <div class="screen" id="screen-2">
+          <div class="screen-header">PROCRASTINATION_LOOP // TIME_AUDIT v4.0</div>
+          <div class="screen-idle" id="idle-2">
+            &gt; assignment status: ignored<br/>
+            &gt; youtube recommendations: infinite<br/>
+            &gt; kitchen fridge trips: 14<br/>
+            &gt; ready to measure your procrastination damage...<br/>
+            <span class="cursor"></span>
+          </div>
+          <div id="result-2" style="display:none;"></div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</div><!-- /#app -->
+
+<!-- ── Random Button ──────────────────── -->
+<button id="random-btn" onclick="randomCalculation()" title="Generate a random chaos calculation">
+  <span class="dice-icon">🎲</span>
+  Random Chaos Calc
+</button>
+
+<!-- ── Clipboard Toast ──────────────── -->
+<div id="toast">✓ COPIED TO CLIPBOARD</div>
+
+<!-- ═══════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════ -->
+<script>
+// ── State ─────────────────────────────────────────────
+let totalCalcs = 0;
+let currentTab = 0;
+let lastResults = {}; // stores latest result text per tab
+let audioEnabled = true;
+let audioCtx = null;
+
+// ── Web Audio API Retro Sound Effects ─────────────────
+function initAudio() {
+  if (!audioCtx) {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (AudioContext) audioCtx = new AudioContext();
+  }
+  if (audioCtx && audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+}
+
+function playTone(freq, type = 'sine', duration = 0.08, gainVal = 0.08) {
+  if (!audioEnabled) return;
+  try {
+    initAudio();
+    if (!audioCtx) return;
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    gain.gain.setValueAtTime(gainVal, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + duration);
+  } catch (e) {}
+}
+
+function playArpeggio(notes, speed = 50, type = 'triangle') {
+  if (!audioEnabled) return;
+  notes.forEach((note, i) => {
+    setTimeout(() => playTone(note, type, 0.1, 0.07), i * speed);
+  });
+}
+
+function playBlipSound() {
+  playTone(540, 'sine', 0.04, 0.05);
+}
+
+function playCalculateSound() {
+  playArpeggio([220, 277.18, 329.63, 440, 554.37, 659.25], 40, 'triangle');
+}
+
+function playSuccessSound() {
+  playArpeggio([523.25, 659.25, 783.99, 1046.50], 65, 'sine');
+}
+
+function playCopySound() {
+  playTone(880, 'triangle', 0.08, 0.07);
+  setTimeout(() => playTone(1320, 'triangle', 0.12, 0.07), 80);
+}
+
+function toggleAudio() {
+  audioEnabled = !audioEnabled;
+  const btn = document.getElementById('sound-toggle');
+  const icon = document.getElementById('sound-icon');
+  const text = document.getElementById('sound-text');
+  if (btn && icon && text) {
+    if (audioEnabled) {
+      btn.classList.remove('muted');
+      icon.textContent = '🔊';
+      text.textContent = 'SFX: ON';
+      playTone(660, 'sine', 0.08);
+    } else {
+      btn.classList.add('muted');
+      icon.textContent = '🔇';
+      text.textContent = 'SFX: OFF';
+    }
+  }
+}
+
+// ── Text-to-Speech Announcer ──────────────────────────
+function announceText(text, btnId) {
+  if (!('speechSynthesis' in window)) {
+    alert('Web Speech API is not supported in this browser.');
+    return;
+  }
+
+  const btn = btnId ? document.getElementById(btnId) : null;
+
+  if (window.speechSynthesis.speaking) {
+    window.speechSynthesis.cancel();
+    if (btn) {
+      btn.classList.remove('speaking');
+      btn.innerHTML = '🗣️ ANNOUNCE ROAST (TTS)';
+    }
+    return;
+  }
+
+  // Strip markdown, HTML tags, and bullets for natural speech
+  const clean = text
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/[•\*_#&>]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  // If a roast quote is inside the text, announce the funny roast directly
+  const roastMatch = clean.match(/Roast:\s*["“]([^"”]+)["”]/i);
+  const speechText = roastMatch
+    ? ("Official diagnosis: " + roastMatch[1])
+    : ("Official result: " + clean);
+
+  const utter = new SpeechSynthesisUtterance(speechText);
+  utter.rate = 1.05;
+  utter.pitch = 1.05;
+
+  const voices = window.speechSynthesis.getVoices();
+  const preferredVoice = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('Samantha') || v.name.includes('Daniel')))
+                      || voices.find(v => v.lang.startsWith('en'));
+  if (preferredVoice) utter.voice = preferredVoice;
+
+  if (btn) {
+    btn.classList.add('speaking');
+    btn.innerHTML = '⏹️ STOP ANNOUNCING';
+  }
+
+  utter.onend = utter.onerror = () => {
+    if (btn) {
+      btn.classList.remove('speaking');
+      btn.innerHTML = '🗣️ ANNOUNCE ROAST (TTS)';
+    }
+  };
+
+  window.speechSynthesis.speak(utter);
+}
+
+// ── Tab Navigation & Sliding Pill ─────────────────────
+function switchTab(idx) {
+  playBlipSound();
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    b.classList.toggle('active', i === idx);
+    b.setAttribute('aria-selected', i === idx);
+  });
+  document.querySelectorAll('.calc-panel').forEach((p, i) => {
+    p.classList.toggle('active', i === idx);
+  });
+  currentTab = idx;
+  movePill(idx);
+}
+
+function movePill(idx) {
+  const pill = document.getElementById('tab-pill');
+  const btn  = document.getElementById('tab-' + idx);
+  if (!pill || !btn) return;
+  const nav  = document.querySelector('.tab-nav');
+  const navRect = nav.getBoundingClientRect();
+  const btnRect = btn.getBoundingClientRect();
+  pill.style.width  = btnRect.width + 'px';
+  pill.style.transform = `translateX(${btnRect.left - navRect.left - 6}px)`;
+}
+
+// ── TV Show Presets ───────────────────────────────────
+const SHOW_PRESETS = {
+  office:         { name: 'The Office (US)', eps: 201, runtime: 22 },
+  breaking_bad:   { name: 'Breaking Bad',    eps: 62,  runtime: 47 },
+  got:            { name: 'Game of Thrones', eps: 73,  runtime: 57 },
+  stranger_things:{ name: 'Stranger Things', eps: 34,  runtime: 55 },
+  friends:        { name: 'Friends',         eps: 236, runtime: 22 },
+  greys:          { name: "Grey's Anatomy",  eps: 420, runtime: 43 },
+  one_piece:      { name: 'One Piece',       eps: 1100,runtime: 24 },
+  simpsons:       { name: 'The Simpsons',    eps: 760, runtime: 22 },
+  sopranos:       { name: 'The Sopranos',    eps: 86,  runtime: 55 },
+  succession:     { name: 'Succession',      eps: 39,  runtime: 60 }
+};
+
+function selectShowPreset(key, chipEl) {
+  playBlipSound();
+  document.querySelectorAll('#panel-0 .preset-chip').forEach(c => c.classList.remove('active'));
+  if (chipEl) chipEl.classList.add('active');
+  const sel = document.getElementById('binge-preset');
+  if (sel) sel.value = key;
+  applyShowPresetData(key);
+}
+
+function onPresetChange(val) {
+  playBlipSound();
+  document.querySelectorAll('#panel-0 .preset-chip').forEach(c => {
+    const fn = c.getAttribute('onclick') || '';
+    c.classList.toggle('active', fn.includes(`'${val}'`));
+  });
+  if (val !== 'custom') {
+    applyShowPresetData(val);
+  }
+}
+
+function applyShowPresetData(key) {
+  const p = SHOW_PRESETS[key];
+  if (!p) return;
+  syncBingeInput('eps', p.eps, 'preset');
+  syncBingeInput('runtime', p.runtime, 'preset');
+}
+
+function syncBingeInput(type, val, source = 'preset') {
+  const isEps = (type === 'eps');
+  const numInput = document.getElementById(isEps ? 'binge-eps' : 'binge-runtime');
+  const slider = document.getElementById(isEps ? 'binge-eps-slider' : 'binge-runtime-slider');
+  const label = document.getElementById(isEps ? 'val-binge-eps' : 'val-binge-runtime');
+  const maxSlider = isEps ? 1200 : 180;
+
+  if (source === 'number') {
+    const sel = document.getElementById('binge-preset');
+    if (sel) sel.value = 'custom';
+    document.querySelectorAll('#panel-0 .preset-chip').forEach(c => c.classList.remove('active'));
+
+    if (val === '' || val === undefined) {
+      if (label) label.textContent = isEps ? '...' : '...m';
+      return;
+    }
+    const num = parseInt(val, 10);
+    if (!isNaN(num)) {
+      if (slider) slider.value = Math.min(Math.max(num, 1), maxSlider);
+      if (label) label.textContent = isEps ? num : (num + 'm');
+    }
+  } else if (source === 'slider') {
+    const sel = document.getElementById('binge-preset');
+    if (sel) sel.value = 'custom';
+    document.querySelectorAll('#panel-0 .preset-chip').forEach(c => c.classList.remove('active'));
+
+    const num = Math.max(1, parseInt(val, 10) || 1);
+    if (numInput) numInput.value = num;
+    if (label) label.textContent = isEps ? num : (num + 'm');
+  } else {
+    const num = Math.max(1, parseInt(val, 10) || 1);
+    if (numInput) numInput.value = num;
+    if (slider) slider.value = Math.min(num, maxSlider);
+    if (label) label.textContent = isEps ? num : (num + 'm');
+  }
+}
+
+// ── Phone Time Presets & Sync ─────────────────────────
+const APP_PRESETS = {
+  tiktok:  { name: 'TikTok / Reels',  dailyHrs: 6.5 },
+  twitter: { name: 'Twitter / X',     dailyHrs: 4.5 },
+  insta:   { name: 'Instagram',       dailyHrs: 4.0 },
+  reddit:  { name: 'Reddit',          dailyHrs: 5.0 },
+  games:   { name: 'Mobile Gaming',   dailyHrs: 5.5 },
+  ghost:   { name: 'Ghost Scrolling', dailyHrs: 3.5 }
+};
+
+function selectAppPreset(key, chipEl) {
+  playBlipSound();
+  document.querySelectorAll('#panel-1 .preset-chip').forEach(c => c.classList.remove('active'));
+  if (chipEl) chipEl.classList.add('active');
+  const sel = document.getElementById('phone-app');
+  if (sel) sel.value = key;
+  if (APP_PRESETS[key]) {
+    syncPhoneInput('daily', APP_PRESETS[key].dailyHrs, 'preset');
+  }
+}
+
+function onAppPresetChange(val) {
+  playBlipSound();
+  document.querySelectorAll('#panel-1 .preset-chip').forEach(c => {
+    const fn = c.getAttribute('onclick') || '';
+    c.classList.toggle('active', fn.includes(`'${val}'`));
+  });
+  if (APP_PRESETS[val]) {
+    syncPhoneInput('daily', APP_PRESETS[val].dailyHrs, 'preset');
+  }
+}
+
+function syncPhoneInput(type, val, source = 'preset') {
+  const isDaily = (type === 'daily');
+  const numInput = document.getElementById(isDaily ? 'phone-daily' : 'phone-years');
+  const slider = document.getElementById(isDaily ? 'phone-daily-slider' : 'phone-years-slider');
+  const label = document.getElementById(isDaily ? 'val-phone-daily' : 'val-phone-years');
+  const maxSlider = isDaily ? 18 : 20;
+
+  if (source === 'number') {
+    if (val === '' || val === undefined) {
+      if (label) label.textContent = isDaily ? '...h' : '... yrs';
+      return;
+    }
+    const num = isDaily ? parseFloat(val) : parseInt(val, 10);
+    if (!isNaN(num)) {
+      if (slider) slider.value = Math.min(Math.max(num, isDaily ? 0.5 : 1), maxSlider);
+      if (label) label.textContent = isDaily ? (num + 'h') : (num + ' yrs');
+    }
+  } else if (source === 'slider') {
+    const num = isDaily ? parseFloat(val) : parseInt(val, 10);
+    if (numInput) numInput.value = num;
+    if (label) label.textContent = isDaily ? (num + 'h') : (num + ' yrs');
+  } else {
+    const num = isDaily ? parseFloat(val) : parseInt(val, 10);
+    if (numInput) numInput.value = num;
+    if (slider) slider.value = Math.min(num, maxSlider);
+    if (label) label.textContent = isDaily ? (num + 'h') : (num + ' yrs');
+  }
+}
+
+// ── Procrastination Scenarios & Sync ──────────────────
+const PROC_SCENARIOS = {
+  homework: { assign: 45, yt: 90, insta: 60, snack: 45 },
+  cram:     { assign: 120, yt: 180, insta: 120, snack: 60 },
+  quick:    { assign: 10, yt: 40, insta: 35, snack: 20 },
+  project:  { assign: 180, yt: 240, insta: 150, snack: 90 }
+};
+
+function selectProcScenario(key, chipEl) {
+  playBlipSound();
+  document.querySelectorAll('#panel-2 .preset-chip').forEach(c => c.classList.remove('active'));
+  if (chipEl) chipEl.classList.add('active');
+  const s = PROC_SCENARIOS[key];
+  if (s) {
+    syncProcTimeInput('assign', s.assign, 'preset');
+    syncProcTimeInput('yt', s.yt, 'preset');
+    syncProcTimeInput('insta', s.insta, 'preset');
+    syncProcTimeInput('snack', s.snack, 'preset');
+  }
+}
+
+function updateLiveProcTotal() {
+  const assign = parseInt(document.getElementById('proc-assign')?.value, 10) || 45;
+  const yt = parseInt(document.getElementById('proc-yt')?.value, 10) || 0;
+  const insta = parseInt(document.getElementById('proc-insta')?.value, 10) || 0;
+  const snack = parseInt(document.getElementById('proc-snack')?.value, 10) || 0;
+
+  const totalProc = yt + insta + snack;
+  const hrs = Math.floor(totalProc / 60);
+  const mins = totalProc % 60;
+  const timeStr = hrs > 0 ? `${hrs}h ${mins}m` : `${mins}m`;
+  const ratio = (totalProc / Math.max(1, assign)).toFixed(1);
+
+  const totalEl = document.getElementById('proc-live-total');
+  const compareEl = document.getElementById('proc-live-compare');
+
+  if (totalEl) totalEl.textContent = `${totalProc} mins (${timeStr})`;
+  if (compareEl) compareEl.textContent = `vs ${assign}m actual assignment (${ratio}× delay ratio)`;
+}
+
+function syncProcTimeInput(type, val, source = 'preset') {
+  const numInput = document.getElementById(`proc-${type}`);
+  const slider = document.getElementById(`proc-${type}-slider`);
+  const label = document.getElementById(`val-proc-${type}`);
+  const maxMap = { assign: 360, yt: 480, insta: 480, snack: 240 };
+  const maxSlider = maxMap[type] || 360;
+
+  if (source === 'number') {
+    if (val === '' || val === undefined) {
+      if (label) label.textContent = '...m';
+      return;
+    }
+    const num = Math.max(0, parseInt(val, 10) || 0);
+    if (slider) slider.value = Math.min(num, maxSlider);
+    if (label) label.textContent = num + 'm';
+  } else if (source === 'slider') {
+    const num = Math.max(0, parseInt(val, 10) || 0);
+    if (numInput) numInput.value = num;
+    if (label) label.textContent = num + 'm';
+  } else {
+    const num = Math.max(0, parseInt(val, 10) || 0);
+    if (numInput) numInput.value = num;
+    if (slider) slider.value = Math.min(num, maxSlider);
+    if (label) label.textContent = num + 'm';
+  }
+
+  updateLiveProcTotal();
+}
+
+// ── Random Calculation ─────────────────────────────────
+function randomCalculation() {
+  playTone(440, 'triangle', 0.12);
+  const tab = Math.floor(Math.random() * 3); // 0, 1, 2
+  switchTab(tab);
+
+  if (tab === 0) {
+    const keys = Object.keys(SHOW_PRESETS);
+    const randKey = keys[Math.floor(Math.random() * keys.length)];
+    const chips = document.querySelectorAll('#panel-0 .preset-chip');
+    const matchChip = Array.from(chips).find(c => (c.getAttribute('onclick') || '').includes(`'${randKey}'`));
+    selectShowPreset(randKey, matchChip);
+    const rewatch = Math.floor(Math.random() * 3) + 1;
+    document.getElementById('binge-rewatch').value = rewatch;
+    document.getElementById('val-binge-rewatch').textContent = rewatch + '×';
+  } else if (tab === 1) {
+    const keys = Object.keys(APP_PRESETS);
+    const randKey = keys[Math.floor(Math.random() * keys.length)];
+    const chips = document.querySelectorAll('#panel-1 .preset-chip');
+    const matchChip = Array.from(chips).find(c => (c.getAttribute('onclick') || '').includes(`'${randKey}'`));
+    selectAppPreset(randKey, matchChip);
+    const randYears = Math.floor(Math.random() * 14) + 2;
+    syncPhoneInput('years', randYears, 'preset');
+    const randDaily = (Math.floor(Math.random() * 20) + 3) * 0.5; // 1.5h to 11.5h
+    syncPhoneInput('daily', randDaily, 'preset');
+  } else {
+    const keys = Object.keys(PROC_SCENARIOS);
+    const randKey = keys[Math.floor(Math.random() * keys.length)];
+    const chips = document.querySelectorAll('#panel-2 .preset-chip');
+    const matchChip = Array.from(chips).find(c => (c.getAttribute('onclick') || '').includes(`'${randKey}'`));
+    selectProcScenario(randKey, matchChip);
+  }
+
+  // Short delay then auto-calculate
+  setTimeout(() => calculate(tab), 250);
+
+  // Confetti burst
+  spawnConfetti();
+}
+
+// ── Confetti Burst ─────────────────────────────────────
+function spawnConfetti() {
+  const colors = ['#FFD700', '#FF4136', '#00E5FF', '#39FF14', '#FF69B4', '#FF8C00'];
+  const btn = document.getElementById('random-btn');
+  const rect = btn ? btn.getBoundingClientRect() : { left: window.innerWidth / 2, top: window.innerHeight / 2, width: 0, height: 0 };
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+
+  for (let i = 0; i < 30; i++) {
+    const el = document.createElement('div');
+    el.classList.add('confetti-piece');
+    const angle = (Math.random() * 360) * (Math.PI / 180);
+    const dist = 60 + Math.random() * 150;
+    const tx = Math.cos(angle) * dist;
+    const ty = Math.sin(angle) * dist - 60;
+    const rot = (Math.random() - 0.5) * 720;
+    const duration = 0.6 + Math.random() * 0.6;
+    el.style.cssText = `
+      left: ${cx}px; top: ${cy}px;
+      background: ${colors[Math.floor(Math.random() * colors.length)]};
+      border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+      --tx: ${tx}px; --ty: ${ty}px; --rot: ${rot}deg; --duration: ${duration}s;
+      transform: translate(-50%, -50%);
+    `;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), duration * 1000 + 100);
+  }
+}
+
+// ── Screen Animations ──────────────────────────────────
+function animateNumber(el, from, to, duration, decimals, suffix = '') {
+  if (!el) return;
+  const start = performance.now();
+  function frame(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 3);
+    const val = from + (to - from) * ease;
+    el.textContent = val.toFixed(decimals) + suffix;
+    if (progress < 1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+function animateProgress(barEl, targetPct) {
+  if (!barEl) return;
+  setTimeout(() => { barEl.style.width = Math.min(100, Math.max(0, targetPct)) + '%'; }, 100);
+}
+
+function triggerScreenEffect(screenEl) {
+  if (!screenEl) return;
+  screenEl.classList.remove('shake', 'calculating');
+  void screenEl.offsetWidth; // force reflow
+  screenEl.classList.add('shake');
+  screenEl.classList.add('calculating');
+  setTimeout(() => screenEl.classList.remove('shake', 'calculating'), 600);
+}
+
+// ── Stat Counter ──────────────────────────────────────
+function incrementStats() {
+  totalCalcs++;
+  const el = document.getElementById('stat-calcs');
+  if (el) {
+    animateNumber(el, totalCalcs - 1, totalCalcs, 600, 0);
+  }
+}
+
+// ── Binge-Watch Time Sink Formula & Logic ─────────────
+function calcBinge(eps, runtime, rewatch) {
+  const totalMins = eps * runtime * rewatch;
+  const totalHours = (totalMins / 60).toFixed(1);
+  const totalDays = (totalMins / (60 * 24)).toFixed(2);
+  const wakingDays = (totalMins / (60 * 16)).toFixed(1);
+  const lostYearPct = ((totalMins / (60 * 8760)) * 100).toFixed(2);
+  const hrsNum = parseFloat(totalHours);
+
+  // Sassy roast tiers based on total watch time
+  let roastTier = '';
+  let roastText = '';
+  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+  if (hrsNum < 15) {
+    roastTier = 'LEVEL 1 // CASUAL SNOOZER';
+    roastText = pick([
+      "Warning: Rookie numbers. Your couch still thinks you're just visiting. Watch more.",
+      "Warning: Weak effort. You still have fresh air in your lungs. Highly disappointing.",
+      "Warning: Amateur slacker. Your remote control isn't even warm yet."
+    ]);
+  } else if (hrsNum < 50) {
+    roastTier = 'LEVEL 2 // WEEKEND CASUALTY';
+    roastText = pick([
+      "Warning: You traded an entire work week for TV. Your house plants died of neglect.",
+      "Warning: You watched so much TV your brain now plays intro music when you wake up.",
+      "Warning: Your eyes are basically square now. Put some eye drops in before you blink sparks."
+    ]);
+  } else if (hrsNum < 120) {
+    roastTier = 'LEVEL 3 // SOFA INDENTATION SPECIALIST';
+    roastText = pick([
+      "Warning: Your couch has accepted you as its biological offspring. Look out a window to see the sun.",
+      "Warning: You are legally furniture now. People will start placing coffee cups on your head.",
+      "Warning: Your spine is currently shaped like a bendy straw. Please stretch before you snap."
+    ]);
+  } else if (hrsNum < 280) {
+    roastTier = 'LEVEL 4 // TERMINAL STREAM SYNDROME';
+    roastText = pick([
+      "Warning: Your spine is permanently shaped like a cooked shrimp. Sunlight now deals +50 fire damage.",
+      "Warning: Netflix customer support is about to send a search party to check your pulse.",
+      "Warning: You have fused with the sofa cushions. You are now 80% couch foam."
+    ]);
+  } else {
+    roastTier = 'LEVEL 5 // ASCENDED BINGE DEITY';
+    roastText = pick([
+      "Warning: A real human being used to live where you sit. Go touch grass immediately.",
+      "Warning: You've spent more time with fictional characters than real humans. Seek help or season 2.",
+      "Warning: There is a permanent crater in your mattress. Even your Wi-Fi router is judging you."
+    ]);
+  }
+
+  // 3 Absurd Real-World Conversions based on total watch time
+  const miles = Math.round(hrsNum * 3.1);
+  let conversion1 = '';
+  if (miles < 50) {
+    conversion1 = `Walked ${miles} miles — enough to visit the snack fridge 800 times.`;
+  } else if (miles < 300) {
+    conversion1 = `Walked ${miles} miles — could've walked to another city in your pajamas.`;
+  } else if (miles < 1000) {
+    conversion1 = `Walked ${miles.toLocaleString()} miles — running away from all your life problems.`;
+  } else {
+    conversion1 = `Walked ${miles.toLocaleString()} miles — literally walked to Mordor, threw the ring, and walked back.`;
+  }
+
+  let conversion2 = '';
+  if (hrsNum < 25) {
+    conversion2 = `Learned how to boil an egg without triggering the smoke alarm.`;
+  } else if (hrsNum < 80) {
+    conversion2 = `Done 200 Duolingo lessons and still only know how to order tacos.`;
+  } else if (hrsNum < 200) {
+    conversion2 = `Mastered the guitar, started a garage band, and broke up over band drama.`;
+  } else {
+    conversion2 = `Earned an entire college degree, or learned karate to fight laziness.`;
+  }
+
+  const nailMm = (hrsNum * 0.14).toFixed(1);
+  const frozenPizzas = Math.max(1, Math.round(hrsNum * 3.5));
+  const heartbeats = Math.round(hrsNum * 72 * 60);
+  let conversion3 = '';
+  if (hrsNum < 40) {
+    conversion3 = `Burned ${frozenPizzas} frozen pizzas because you clicked "Next Episode".`;
+  } else if (hrsNum < 150) {
+    conversion3 = `Grown ${nailMm} mm of fingernails sitting in the dark like a goblin.`;
+  } else {
+    conversion3 = `Spent ${(heartbeats / 1_000_000).toFixed(1)} million heartbeats staring at "Are You Still Watching?".`;
+  }
+
+  const couchIndent = Math.min(18, (hrsNum * 0.05 + (rewatch > 1 ? 2.5 : 0.8))).toFixed(1);
+  const sunlightDeficit = Math.min(99.9, (hrsNum * 0.35 + 20)).toFixed(0);
+
+  const shareText = `📺 The Binge-Watch Time Sink Results:\n` +
+    `• Watch Time: ${totalHours} hours (${totalDays} continuous days)\n` +
+    `• Waking Life Lost: ${wakingDays} days (~${lostYearPct}% of a year)\n` +
+    `• Roast: "${roastText}" (${roastTier})\n` +
+    `• 3 Absurd Conversions:\n` +
+    `  1. ${conversion1}\n` +
+    `  2. ${conversion2}\n` +
+    `  3. ${conversion3}\n` +
+    `Calculated by Chaos Calculator™`;
+
+  return {
+    totalHours, totalDays, wakingDays, lostYearPct,
+    roastTier, roastText,
+    conversion1, conversion2, conversion3,
+    couchIndent, sunlightDeficit, shareText
+  };
+}
+
+// ── Phone Screen Time Formula & Logic ─────────────────
+function calcPhoneTime(dailyHours, years, appType) {
+  const totalHours = Math.round(dailyHours * 365.25 * years);
+  const totalDays24 = (totalHours / 24).toFixed(1);
+  const wakingDays = (totalHours / 16).toFixed(1);
+  const wakingYears = (parseFloat(wakingDays) / 365.25).toFixed(2);
+  const pctWakingLife = Math.min(99.9, (dailyHours / 16) * 100).toFixed(1);
+
+  // Thumb scrolling miles (avg 80 inches/hour of active scrolling = ~0.00126 miles/hr)
+  const milesScrolled = Math.max(1, Math.round((totalHours * 85) / 5280));
+  const everestScale = (milesScrolled * 5280 / 29032).toFixed(1);
+
+  // Face drops
+  const faceDrops = Math.max(1, Math.round(years * 14 * (dailyHours / 4)));
+
+  // Books equivalent (at 250 wpm = ~4 hours per book)
+  const booksRead = Math.max(1, Math.round(totalHours / 4));
+
+  // Sassy roast tiers
+  let roastTier = '';
+  let roastText = '';
+  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+  if (dailyHours < 2.5) {
+    roastTier = 'LEVEL 1 // SUSPICIOUSLY FUNCTIONAL';
+    roastText = pick([
+      "Warning: Suspiciously low screen time. Are you a monk or did you lose your phone charger?",
+      "Warning: You still look at real trees instead of phone wallpaper. Highly suspicious behavior."
+    ]);
+  } else if (dailyHours < 5.0) {
+    roastTier = 'LEVEL 2 // STANDARD SCREEN ADDICT';
+    roastText = pick([
+      "Warning: Standard modern zombie. Your right thumb has more muscle definition than your legs.",
+      "Warning: You check your phone when you are bored, and then get bored of checking your phone."
+    ]);
+  } else if (dailyHours < 8.0) {
+    roastTier = 'LEVEL 3 // THUMB TENDON OLYMPIAN';
+    roastText = pick([
+      "Warning: Your phone battery dies before lunchtime. Your charging cord is your emotional support leash.",
+      "Warning: You have surrendered over a third of your waking life to a glass slab. Your optometrist sends their thanks."
+    ]);
+  } else if (dailyHours < 12.0) {
+    roastTier = 'LEVEL 4 // TERMINAL GLASS GAZER';
+    roastText = pick([
+      "Warning: Terminal Screen Addiction. If someone turns off your Wi-Fi, your brain will produce a blue screen of death.",
+      "Warning: Your lock screen has burned a permanent holographic imprint onto your retinas."
+    ]);
+  } else {
+    roastTier = 'LEVEL 5 // ASCENDED CYBORG SLACKER';
+    roastText = pick([
+      "Warning: You are 90% lithium-ion and 10% regret. Please look at the sky before you forget it exists.",
+      "Warning: You have spent more time with phone pixels than with your own thoughts. Go touch actual grass."
+    ]);
+  }
+
+  // 3 Absurd Conversions
+  let conv1 = `Your thumb scrolled ${milesScrolled.toLocaleString()} miles — equivalent to climbing Mount Everest ${everestScale}× on your thumb.`;
+  let conv2 = `You could have read ${booksRead.toLocaleString()} full books or learned 5 languages, but you watched 15-second dances instead.`;
+  let conv3 = `Dropped phone onto your nose approx. ${faceDrops.toLocaleString()} times while lying in bed half-asleep.`;
+
+  const shareText = `📱 Phone Time Black Hole Results:\n` +
+    `• Daily Average: ${dailyHours}h/day for ${years} years\n` +
+    `• Total Lifetime Screen Time: ${totalHours.toLocaleString()} hours (${totalDays24} continuous days)\n` +
+    `• Waking Existence Surrendered: ${wakingYears} full waking years (${pctWakingLife}% of your life)\n` +
+    `• Roast: "${roastText}" (${roastTier})\n` +
+    `• 3 Absurd Conversions:\n` +
+    `  1. 📜 ${conv1}\n` +
+    `  2. 📚 ${conv2}\n` +
+    `  3. 🤕 ${conv3}\n` +
+    `Calculated by Chaos Calculator™`;
+
+  return {
+    totalHours, totalDays24, wakingDays, wakingYears, pctWakingLife,
+    milesScrolled, faceDrops, booksRead,
+    roastTier, roastText,
+    conv1, conv2, conv3, shareText
+  };
+}
+
+// ── Procrastination Breakdown Formula & Logic ─────────
+function calcProcrastination(assignMins, ytMins, instaMins, snackMins) {
+  const totalProcrastMins = ytMins + instaMins + snackMins;
+  const totalTimeMins = assignMins + totalProcrastMins;
+  const procrastRatio = (totalProcrastMins / Math.max(1, assignMins)).toFixed(1);
+  const efficiencyPct = ((assignMins / Math.max(1, totalTimeMins)) * 100).toFixed(1);
+
+  const procHrsInt = Math.floor(totalProcrastMins / 60);
+  const procMinsRem = totalProcrastMins % 60;
+  const procTimeStr = procHrsInt > 0 ? `${procHrsInt}h ${procMinsRem}m` : `${procMinsRem}m`;
+
+  const totalHrsInt = Math.floor(totalTimeMins / 60);
+  const totalMinsRem = totalTimeMins % 60;
+  const totalTimeStr = totalHrsInt > 0 ? `${totalHrsInt}h ${totalMinsRem}m` : `${totalMinsRem}m`;
+
+  const ratioNum = parseFloat(procrastRatio);
+
+  // Sassy simple roasts based on procrastination-to-work ratio
+  let roastTier = '';
+  let roastText = '';
+  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+
+  if (ratioNum <= 1.0) {
+    roastTier = 'LEVEL 1 // CASUAL DISTRACTION';
+    roastText = pick([
+      "Warning: Mild distraction. You spent more time adjusting your desk lighting than studying.",
+      "Warning: Rookie procrastination. You still have a realistic chance of finishing on time."
+    ]);
+  } else if (ratioNum <= 3.0) {
+    roastTier = 'LEVEL 2 // DOPAMINE DETOUR';
+    roastText = pick([
+      "Warning: You came for 5 minutes of study music and stayed for 2 hours of hydraulic press videos.",
+      "Warning: Your assignment just sponsored a full marathon of random internet nonsense."
+    ]);
+  } else if (ratioNum <= 6.0) {
+    roastTier = 'LEVEL 3 // EXECUTIVE DYSFUNCTION OLYMPIAN';
+    roastText = pick([
+      "Warning: You opened the fridge 14 times expecting new snacks to magically materialize.",
+      "Warning: You cleaned your entire room and reorganized your apps just to avoid page one."
+    ]);
+  } else {
+    roastTier = 'LEVEL 4 // ASCENDED PROCRASTINATION DEITY';
+    roastText = pick([
+      "Warning: You are currently 95% procrastination and 5% panic. Due date is calling for backup.",
+      "Warning: Your assignment is growing cobwebs. The dopamine was free, but your grades will pay."
+    ]);
+  }
+
+  // 3 Absurd Conversions / Breakdowns
+  const conv1 = `Breakdown: ▶️ YouTube: ${ytMins}m | 📸 Reels: ${instaMins}m | 🍕 Fridge Patrol: ${snackMins}m.`;
+  const conv2 = `For every 1 minute of actual work, you spent ${procrastRatio} minutes escaping reality.`;
+  const conv3 = `Efficiency Score: ${efficiencyPct}%. Your future self has officially rated this study session 0/5 stars on Yelp.`;
+
+  const shareText = `⏰ Procrastination Doom Loop Results:\n` +
+    `• Assignment Needed: ${assignMins} minutes\n` +
+    `• Total Procrastination: ${totalProcrastMins} mins (${procTimeStr})\n` +
+    `• Total Session Time: ${totalTimeMins} mins (${totalTimeStr})\n` +
+    `• Procrastination Multiplier: ${procrastRatio}× delay\n` +
+    `• Real Efficiency: ${efficiencyPct}%\n` +
+    `• Roast: "${roastText}" (${roastTier})\n` +
+    `• Breakdowns & Reality:\n` +
+    `  1. ⏳ ${conv1}\n` +
+    `  2. 🔍 ${conv2}\n` +
+    `  3. ⭐ ${conv3}\n` +
+    `Calculated by Chaos Calculator™`;
+
+  return {
+    totalProcrastMins, totalTimeMins, procrastRatio, efficiencyPct,
+    procTimeStr, totalTimeStr,
+    roastTier, roastText,
+    conv1, conv2, conv3, shareText
+  };
+}
+
+// ── Main Calculate Dispatcher ─────────────────────────
+function calculate(idx = 0) {
+  playCalculateSound();
+  const screen  = document.getElementById('screen-' + idx);
+  const idleEl  = document.getElementById('idle-' + idx);
+  const resultEl = document.getElementById('result-' + idx);
+
+  triggerScreenEffect(screen);
+  incrementStats();
+
+  if (idleEl) idleEl.style.display = 'none';
+  if (resultEl) resultEl.style.display = 'none';
+
+  setTimeout(() => {
+    playSuccessSound();
+    if (resultEl) resultEl.style.display = 'block';
+
+    const ts = new Date().toLocaleTimeString('en-US', { hour12: false });
+
+    if (idx === 0) {
+      const epsInput = document.getElementById('binge-eps');
+      const runtimeInput = document.getElementById('binge-runtime');
+      const rewatchInput = document.getElementById('binge-rewatch');
+
+      const eps = Math.max(1, parseInt(epsInput.value, 10) || 1);
+      const runtime = Math.max(1, parseInt(runtimeInput.value, 10) || 1);
+      const rewatch = Math.max(1, parseInt(rewatchInput.value, 10) || 1);
+
+      epsInput.value = eps;
+      runtimeInput.value = runtime;
+
+      const r = calcBinge(eps, runtime, rewatch);
+      lastResults[0] = r.shareText;
+
+      const html = `
+        <div class="metric">
+          <div class="metric-label">Total Time Sacrificed to The Stream</div>
+          <div class="metric-value" id="m0-hours">0<span class="metric-unit">hours</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Continuous Days (24h) &amp; Waking Days (16h)</div>
+          <div class="metric-value" id="m0-days">0<span class="metric-unit">days</span></div>
+        </div>
+
+        <div class="roast-box">
+          <div class="roast-tier-badge">${r.roastTier}</div>
+          <div class="roast-quote">"${r.roastText}"</div>
+          <div style="font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--gold);">
+            &gt; Couch Indentation: <span class="highlight-stat">${r.couchIndent} cm</span> &nbsp;|&nbsp; Sunlight Deficit: <span class="highlight-stat">${r.sunlightDeficit}%</span>
+          </div>
+        </div>
+
+        <div class="conversions-container">
+          <div class="conversions-header">
+            <span>⚡</span> 3 Absurd Real-World Equivalencies
+          </div>
+          <div class="conversion-item">
+            <span class="conversion-icon">🚶</span>
+            <div class="conversion-text"><strong>Expedition:</strong> ${r.conversion1}</div>
+          </div>
+          <div class="conversion-item">
+            <span class="conversion-icon">🧠</span>
+            <div class="conversion-text"><strong>Mastery:</strong> ${r.conversion2}</div>
+          </div>
+          <div class="conversion-item">
+            <span class="conversion-icon">🍕</span>
+            <div class="conversion-text"><strong>Biological:</strong> ${r.conversion3}</div>
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <strong>HOW WE KNOW:</strong><br/>
+          totalHours = (eps × runtime × rewatch) ÷ 60<br/>
+          wakingDays = totalHours ÷ 16 &nbsp;|&nbsp; lostYearPct = (totalHours ÷ 8760) × 100%
+        </div>
+
+        <div class="result-actions-bar">
+          <button class="share-btn" id="share-btn-0" onclick="shareResult(0)">
+            📋 SHARE THIS RESULT
+          </button>
+          <button class="announce-btn" id="announce-btn-0" onclick="announceText(lastResults[0], 'announce-btn-0')">
+            🗣️ ANNOUNCE ROAST (TTS)
+          </button>
+        </div>
+        <div class="screen-footer">CALC_0 // ${ts} // CHRONO_DEFICIT v3.1 — SOFA_SENSOR: ENGAGED</div>
+      `;
+
+      resultEl.innerHTML = html;
+      animateNumber(document.getElementById('m0-hours'), 0, parseFloat(r.totalHours), 1000, 1);
+      animateNumber(document.getElementById('m0-days'), 0, parseFloat(r.totalDays), 900, 2);
+
+      if (parseFloat(r.totalHours) > 100) {
+        spawnConfetti();
+      }
+
+    } else if (idx === 1) {
+      const dailyInput = document.getElementById('phone-daily');
+      const yearsInput = document.getElementById('phone-years');
+      const appSelect  = document.getElementById('phone-app');
+
+      const daily = Math.max(0.5, parseFloat(dailyInput.value) || 5.5);
+      const years = Math.max(1, parseInt(yearsInput.value, 10) || 8);
+
+      dailyInput.value = daily;
+      yearsInput.value = years;
+
+      const r = calcPhoneTime(daily, years, appSelect.value);
+      lastResults[1] = r.shareText;
+
+      const html = `
+        <div class="metric">
+          <div class="metric-label">Lifetime Phone Screen Time</div>
+          <div class="metric-value" id="m1-hours">0<span class="metric-unit">hours</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Waking Life Surrendered to Glass</div>
+          <div class="metric-value" id="m1-years">0<span class="metric-unit">waking years (${r.pctWakingLife}%)</span></div>
+        </div>
+
+        <div class="roast-box">
+          <div class="roast-tier-badge">${r.roastTier}</div>
+          <div class="roast-quote">"${r.roastText}"</div>
+          <div style="font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--gold);">
+            &gt; Thumb Scroll Distance: <span class="highlight-stat">${r.milesScrolled.toLocaleString()} miles</span> &nbsp;|&nbsp; 24h Days: <span class="highlight-stat">${r.totalDays24} days</span>
+          </div>
+        </div>
+
+        <div class="conversions-container">
+          <div class="conversions-header">
+            <span>⚡</span> 3 Devastating Screen Time Truths
+          </div>
+          <div class="conversion-item">
+            <span class="conversion-icon">📜</span>
+            <div class="conversion-text"><strong>Thumb Marathon:</strong> ${r.conv1}</div>
+          </div>
+          <div class="conversion-item">
+            <span class="conversion-icon">📚</span>
+            <div class="conversion-text"><strong>Lost Knowledge:</strong> ${r.conv2}</div>
+          </div>
+          <div class="conversion-item">
+            <span class="conversion-icon">🤕</span>
+            <div class="conversion-text"><strong>Clumsy Gravity:</strong> ${r.conv3}</div>
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <strong>HOW WE KNOW:</strong><br/>
+          totalHours = dailyHours × 365.25 × years<br/>
+          wakingYears = (totalHours ÷ 16) ÷ 365.25 &nbsp;|&nbsp; thumbMiles = (totalHours × 85) ÷ 5280
+        </div>
+
+        <div class="result-actions-bar">
+          <button class="share-btn" id="share-btn-1" onclick="shareResult(1)">
+            📋 SHARE THIS RESULT
+          </button>
+          <button class="announce-btn" id="announce-btn-1" onclick="announceText(lastResults[1], 'announce-btn-1')">
+            🗣️ ANNOUNCE ROAST (TTS)
+          </button>
+        </div>
+        <div class="screen-footer">CALC_1 // ${ts} // SCREEN_CHRONO v2.4 — THUMB_SENSOR: ONLINE</div>
+      `;
+
+      resultEl.innerHTML = html;
+      animateNumber(document.getElementById('m1-hours'), 0, r.totalHours, 1000, 0);
+      animateNumber(document.getElementById('m1-years'), 0, parseFloat(r.wakingYears), 900, 2);
+
+      if (r.totalHours > 5000) {
+        spawnConfetti();
+      }
+
+    } else if (idx === 2) {
+      const assign = Math.max(1, parseInt(document.getElementById('proc-assign')?.value, 10) || 45);
+      const yt = Math.max(0, parseInt(document.getElementById('proc-yt')?.value, 10) || 0);
+      const insta = Math.max(0, parseInt(document.getElementById('proc-insta')?.value, 10) || 0);
+      const snack = Math.max(0, parseInt(document.getElementById('proc-snack')?.value, 10) || 0);
+
+      const r = calcProcrastination(assign, yt, insta, snack);
+      lastResults[2] = r.shareText;
+
+      const html = `
+        <div class="metric">
+          <div class="metric-label">Overall Procrastination Time Lost</div>
+          <div class="metric-value" id="m2-total">0<span class="metric-unit">mins (${r.procTimeStr})</span></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Delay Multiplier vs Real Work</div>
+          <div class="metric-value" id="m2-ratio">0<span class="metric-unit">× (${r.efficiencyPct}% efficiency)</span></div>
+          <div class="progress-bar-bg"><div class="progress-bar-fill" id="pb2" style="background: linear-gradient(90deg, var(--red), var(--gold));"></div></div>
+        </div>
+
+        <div class="roast-box">
+          <div class="roast-tier-badge">${r.roastTier}</div>
+          <div class="roast-quote">"${r.roastText}"</div>
+          <div style="font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--gold);">
+            &gt; Total Session: <span class="highlight-stat">${r.totalTimeStr}</span> &nbsp;|&nbsp; Actual Assignment: <span class="highlight-stat">${assign}m</span>
+          </div>
+        </div>
+
+        <div class="conversions-container">
+          <div class="conversions-header">
+            <span>⚡</span> 3 Realities of Your Procrastination Session
+          </div>
+          <div class="conversion-item">
+            <span class="conversion-icon">⏳</span>
+            <div class="conversion-text"><strong>Timeline Audit:</strong> ${r.conv1}</div>
+          </div>
+          <div class="conversion-item">
+            <span class="conversion-icon">🔍</span>
+            <div class="conversion-text"><strong>Reality Multiplier:</strong> ${r.conv2}</div>
+          </div>
+          <div class="conversion-item">
+            <span class="conversion-icon">⭐</span>
+            <div class="conversion-text"><strong>Productivity Audit:</strong> ${r.conv3}</div>
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <strong>HOW WE KNOW:</strong><br/>
+          overallProcrastination = youtube (${yt}m) + instagram (${insta}m) + snacks (${snack}m) = ${r.totalProcrastMins}m<br/>
+          delayMultiplier = ${r.totalProcrastMins}m ÷ ${assign}m = ${r.procrastRatio}× &nbsp;|&nbsp; efficiency = (${assign}m ÷ ${r.totalTimeMins}m) × 100%
+        </div>
+
+        <div class="result-actions-bar">
+          <button class="share-btn" id="share-btn-2" onclick="shareResult(2)">
+            📋 SHARE THIS RESULT
+          </button>
+          <button class="announce-btn" id="announce-btn-2" onclick="announceText(lastResults[2], 'announce-btn-2')">
+            🗣️ ANNOUNCE ROAST (TTS)
+          </button>
+        </div>
+        <div class="screen-footer">CALC_2 // ${ts} // PROCRASTINATION_LOOP v4.0 — COGNITIVE_DISSONANCE: CRITICAL</div>
+      `;
+
+      resultEl.innerHTML = html;
+      animateNumber(document.getElementById('m2-total'), 0, r.totalProcrastMins, 900, 0);
+      animateNumber(document.getElementById('m2-ratio'), 0, parseFloat(r.procrastRatio), 900, 1);
+      animateProgress(document.getElementById('pb2'), Math.max(5, 100 - parseFloat(r.procrastRatio) * 15));
+
+      if (r.totalProcrastMins > 120) {
+        spawnConfetti();
+      }
+    }
+
+  }, 350);
+}
+
+// ── Share Result ───────────────────────────────────────
+function shareResult(idx = 0) {
+  const text = lastResults[idx];
+  if (!text) return;
+  const btn = document.getElementById('share-btn-' + idx);
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => {
+      flashShareSuccess(btn);
+    }).catch(() => fallbackCopy(text, btn));
+  } else {
+    fallbackCopy(text, btn);
+  }
+}
+
+function fallbackCopy(text, btn) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); flashShareSuccess(btn); } catch(e) {}
+  document.body.removeChild(ta);
+}
+
+function flashShareSuccess(btn) {
+  if (!btn) return;
+  playCopySound();
+  btn.textContent = '✓ COPIED!';
+  btn.classList.add('copied');
+  showToast();
+  setTimeout(() => {
+    btn.innerHTML = '📋 SHARE THIS RESULT';
+    btn.classList.remove('copied');
+  }, 2200);
+}
+
+function showToast() {
+  const toast = document.getElementById('toast');
+  if (toast) {
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+}
+
+// ── Initialize ────────────────────────────────────────
+(function init() {
+  const stat = document.getElementById('stat-calcs');
+  if (stat) stat.textContent = '0';
+  updateLiveProcTotal();
+  // Position sliding pill
+  requestAnimationFrame(() => setTimeout(() => movePill(0), 80));
+  window.addEventListener('resize', () => movePill(currentTab));
+})();
+</script>
+
+</body>
+</html>
